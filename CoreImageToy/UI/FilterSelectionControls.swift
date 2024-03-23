@@ -1,6 +1,6 @@
 //
 //  FilterSelectionControls.swift
-//  MetalImage
+//  CoreImageToy
 //
 //  Created by Jacob Bartlett on 22/03/2024.
 //

@@ -1,6 +1,6 @@
 //
 //  ImagesViewModel.swift
-//  MetalImage
+//  CoreImageToy
 //
 //  Created by Jacob Bartlett on 21/03/2024.
 //

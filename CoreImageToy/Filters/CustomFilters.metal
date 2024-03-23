@@ -1,6 +1,6 @@
 //
 //  CustomFilters.metal
-//  MetalImage
+//  CoreImageToy
 //
 //  Created by Jacob Bartlett on 22/03/2024.
 //
@@ -62,4 +62,55 @@ float4 wave(
     float oscillationRange = maxOscillation - minOscillation;
     float adjustedOscillationFactor = minOscillation + (baseOscillation * oscillationRange);
     return s * adjustedOscillationFactor;
+}
+
+[[ stitchable ]]
+float4 gallifrey(
+    coreimage::sample_t s,
+    coreimage::destination dest
+) {
+    return float4(s.g, s.b, s.r, s.a);
+}
+
+[[ stitchable ]]
+float4 alien(
+    coreimage::sample_t s,
+    coreimage::destination dest
+) {
+    return float4(s.b, s.r, s.g, s.a);
+}
+
+[[ stitchable ]]
+float4 grayscale(
+    coreimage::sample_t s,
+    coreimage::destination dest
+) {
+    float3 grayscaleWeights = float3(0.2125, 0.7154, 0.0721);
+    float avgLuminescence = dot(s.rgb, grayscaleWeights);
+    return float4(avgLuminescence, avgLuminescence, avgLuminescence, s.a);
+}
+
+[[ stitchable ]]
+float4 spectral(
+    coreimage::sample_t s,
+    coreimage::destination dest
+) {
+    float3 grayscaleWeights = float3(0.2125, 0.7154, 0.0721);
+    float avgLuminescence = dot(s.rgb, grayscaleWeights);
+    float invertedLuminescence = 1 - avgLuminescence;
+    float scaledLumin = pow(invertedLuminescence, 3);
+    return float4(scaledLumin, scaledLumin, scaledLumin, s.a);
+}
+
+
+[[ stitchable ]]
+float4 voidStuff(
+    coreimage::sampler sampler,
+    coreimage::destination dest
+) {
+    // I actually read the docs!
+    // https://developer.apple.com/metal/MetalCIKLReference6.pdf
+    float2 shiftedCoords = float2(dest.coord().x + 0.5, dest.coord().y + 0.5);
+    float4 shiftedSample = sampler.sample(shiftedCoords);
+    return shiftedSample;
 }
