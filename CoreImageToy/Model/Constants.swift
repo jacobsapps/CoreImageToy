@@ -11,12 +11,12 @@ import Foundation
 enum Constants {
     static let catNames: [String] = ["catKingdom", "rosie", "cody", "luna"]
     
-    static let filterCategoryNames: [String] = [kCICategoryDistortionEffect,
-                                                kCICategoryGeometryAdjustment,
-                                                kCICategoryColorAdjustment,
+    static let filterCategoryNames: [String] = [kCICategoryStylize,
                                                 kCICategoryColorEffect,
-                                                kCICategoryStylize,
-                                                kCICategoryBlur]
+                                                kCICategoryBlur,
+                                                kCICategoryDistortionEffect,
+                                                kCICategoryColorAdjustment,
+                                                kCICategoryGeometryAdjustment]
     
     static let customFilters = ImageFilterCategory(
         name: "Custom filters",
@@ -30,7 +30,8 @@ enum Constants {
             ImageFilterSelection(filter: AlienFilter()),
             ImageFilterSelection(filter: GrayscaleFilter()),
             ImageFilterSelection(filter: SpectralFilter()),
-            ImageFilterSelection(filter: VoidStuffFilter()) 
+            ImageFilterSelection(filter: ShiftFilter()),
+            ImageFilterSelection(filter: VoidStuffFilter())
         ].reversed()
     )
 }

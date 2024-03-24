@@ -102,15 +102,24 @@ float4 spectral(
     return float4(scaledLumin, scaledLumin, scaledLumin, s.a);
 }
 
-
 [[ stitchable ]]
-float4 voidStuff(
-    coreimage::sampler sampler,
-    coreimage::destination dest
+float4 shift(
+    coreimage::sampler src
 ) {
     // I actually read the docs!
     // https://developer.apple.com/metal/MetalCIKLReference6.pdf
-    float2 shiftedCoords = float2(dest.coord().x + 0.5, dest.coord().y + 0.5);
-    float4 shiftedSample = sampler.sample(shiftedCoords);
+    float4 shiftedSample = sample(src, src.coord() - float2(0.15, 0.15));
     return shiftedSample;
+}
+
+[[ stitchable ]]
+float4 voidStuff(
+    coreimage::sampler src
+) {
+    float4 color = sample(src, src.coord());
+    float2 redCoord = src.coord() - float2(0.1, 0.1);
+    color.r = sample(src, redCoord).r;
+    float2 blueCoord = src.coord() + float2(0.05, 0.05);
+    color.b = sample(src, blueCoord).b;
+    return color * color.a;
 }

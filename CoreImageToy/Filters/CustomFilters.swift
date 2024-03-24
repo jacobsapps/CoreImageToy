@@ -158,10 +158,11 @@ final class SpectralFilter: CIFilter {
     }
 }
 
-final class VoidStuffFilter: CIFilter {
+
+final class ShiftFilter: CIFilter {
     
     static var kernel: CIKernel = { () -> CIKernel in
-        getFancyKernel(function: "voidStuff")
+        getBaseCIKernel(function: "shift")
     }()
     
     @objc dynamic var inputImage: CIImage?
@@ -172,13 +173,40 @@ final class VoidStuffFilter: CIFilter {
         get {
             guard let input = inputImage else { return nil }
             let sampler = CISampler(image: input)
-            return Self.kernel.apply(extent: input.extent, roiCallback: { _, rect in
-                return rect
-            }, arguments: [input])
+            return Self.kernel.apply(extent: input.extent,
+                                     roiCallback: { $1 },
+                                     arguments: [sampler])
         }
     }
     
-    private static func getFancyKernel(function: String) -> CIKernel {
+    private static func getBaseCIKernel(function: String) -> CIKernel {
+        let url = Bundle.main.url(forResource: "default", withExtension: "metallib")!
+        let data = try! Data(contentsOf: url)
+        return try! CIKernel(functionName: function, fromMetalLibraryData: data)
+    }
+}
+
+final class VoidStuffFilter: CIFilter {
+    
+    static var kernel: CIKernel = { () -> CIKernel in
+        getBaseCIKernel(function: "voidStuff")
+    }()
+    
+    @objc dynamic var inputImage: CIImage?
+    
+    // Slightly more ceremony here since we are passing a
+    // coreimage::sampler to the shader rather than an image
+    override var outputImage: CIImage? {
+        get {
+            guard let input = inputImage else { return nil }
+            let sampler = CISampler(image: input)
+            return Self.kernel.apply(extent: input.extent,
+                                     roiCallback: { $1 },
+                                     arguments: [sampler])
+        }
+    }
+    
+    private static func getBaseCIKernel(function: String) -> CIKernel {
         let url = Bundle.main.url(forResource: "default", withExtension: "metallib")!
         let data = try! Data(contentsOf: url)
         return try! CIKernel(functionName: function, fromMetalLibraryData: data)
