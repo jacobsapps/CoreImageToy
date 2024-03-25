@@ -10,7 +10,7 @@
 using namespace metal;
 
 [[ stitchable ]]
-float4 grainy(
+float4 grainyFilter(
     coreimage::sample_t s,
     coreimage::destination dest
 ) {
@@ -21,7 +21,7 @@ float4 grainy(
 }
 
 [[ stitchable ]]
-float4 diagonal(
+float4 diagonalFilter(
     coreimage::sample_t s,
     coreimage::destination dest
 ) {
@@ -36,7 +36,7 @@ float4 diagonal(
 }
 
 [[ stitchable ]]
-float4 warmInvert(
+float4 warmInversionFilter(
     coreimage::sample_t s,
     coreimage::destination dest
 ) {
@@ -44,7 +44,7 @@ float4 warmInvert(
 }
 
 [[ stitchable ]]
-float4 normalize(
+float4 normalizeFilter(
     coreimage::sample_t s,
     coreimage::destination dest
 ) {
@@ -52,7 +52,7 @@ float4 normalize(
 }
 
 [[ stitchable ]]
-float4 wave(
+float4 waveFilter(
     coreimage::sample_t s,
     coreimage::destination dest
 ) {
@@ -65,7 +65,7 @@ float4 wave(
 }
 
 [[ stitchable ]]
-float4 gallifrey(
+float4 gallifreyFilter(
     coreimage::sample_t s,
     coreimage::destination dest
 ) {
@@ -73,7 +73,7 @@ float4 gallifrey(
 }
 
 [[ stitchable ]]
-float4 alien(
+float4 alienFilter(
     coreimage::sample_t s,
     coreimage::destination dest
 ) {
@@ -81,7 +81,7 @@ float4 alien(
 }
 
 [[ stitchable ]]
-float4 grayscale(
+float4 grayscaleFilter(
     coreimage::sample_t s,
     coreimage::destination dest
 ) {
@@ -91,7 +91,7 @@ float4 grayscale(
 }
 
 [[ stitchable ]]
-float4 spectral(
+float4 spectralFilter(
     coreimage::sample_t s,
     coreimage::destination dest
 ) {
@@ -103,7 +103,7 @@ float4 spectral(
 }
 
 [[ stitchable ]]
-float4 shift(
+float4 shiftFilter(
     coreimage::sampler src
 ) {
     // I actually read the docs!
@@ -113,13 +113,13 @@ float4 shift(
 }
 
 [[ stitchable ]]
-float4 voidStuff(
+float4 threeDGlassesFilter(
     coreimage::sampler src
 ) {
     float4 color = sample(src, src.coord());
-    float2 redCoord = src.coord() - float2(0.1, 0.1);
+    float2 redCoord = src.coord() - float2(0.04, 0.04);
     color.r = sample(src, redCoord).r;
-    float2 blueCoord = src.coord() + float2(0.05, 0.05);
+    float2 blueCoord = src.coord() + float2(0.02, 0.02);
     color.b = sample(src, blueCoord).b;
     return color * color.a;
 }

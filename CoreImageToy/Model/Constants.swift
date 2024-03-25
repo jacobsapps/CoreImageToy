@@ -31,6 +31,8 @@ enum Constants {
             ImageFilterSelection(filter: GrayscaleFilter()),
             ImageFilterSelection(filter: SpectralFilter()),
             ImageFilterSelection(filter: ShiftFilter()),
+            ImageFilterSelection(filter: ThreeDGlassesFilter()),
+            ImageFilterSelection(filter: PixellateFacesFilter()),
             ImageFilterSelection(filter: VoidStuffFilter())
         ].reversed()
     )

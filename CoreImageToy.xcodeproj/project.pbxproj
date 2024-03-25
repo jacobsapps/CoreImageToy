@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,8 @@
 		16488E312BAE2DB8003E1D7F /* ImageFilterCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16488E302BAE2DB8003E1D7F /* ImageFilterCategory.swift */; };
 		16488E332BAE2DC7003E1D7F /* ImageFilterSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16488E322BAE2DC7003E1D7F /* ImageFilterSelection.swift */; };
 		16488E352BAE2F98003E1D7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16488E342BAE2F98003E1D7F /* Constants.swift */; };
+		16CF72362BB1928100E385AF /* CoreImageUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 16CF72352BB1928100E385AF /* CoreImageUtils */; };
+		16CF72392BB1933200E385AF /* CoreImageUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 16CF72382BB1933200E385AF /* CoreImageUtils */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16CF72362BB1928100E385AF /* CoreImageUtils in Frameworks */,
+				16CF72392BB1933200E385AF /* CoreImageUtils in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +132,10 @@
 			dependencies = (
 			);
 			name = CoreImageToy;
+			packageProductDependencies = (
+				16CF72352BB1928100E385AF /* CoreImageUtils */,
+				16CF72382BB1933200E385AF /* CoreImageUtils */,
+			);
 			productName = CoreImageToy;
 			productReference = 16488E122BAE2D66003E1D7F /* CoreImageToy.app */;
 			productType = "com.apple.product-type.application";
@@ -156,6 +164,9 @@
 				Base,
 			);
 			mainGroup = 16488E092BAE2D66003E1D7F;
+			packageReferences = (
+				16CF72372BB1933200E385AF /* XCLocalSwiftPackageReference "../CoreImageUtils" */,
+			);
 			productRefGroup = 16488E132BAE2D66003E1D7F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -398,6 +409,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		16CF72372BB1933200E385AF /* XCLocalSwiftPackageReference "../CoreImageUtils" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../CoreImageUtils;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		16CF72352BB1928100E385AF /* CoreImageUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CoreImageUtils;
+		};
+		16CF72382BB1933200E385AF /* CoreImageUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CoreImageUtils;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 16488E0A2BAE2D66003E1D7F /* Project object */;
 }
