@@ -11,7 +11,7 @@
 		16488E1A2BAE2D67003E1D7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16488E192BAE2D67003E1D7F /* Assets.xcassets */; };
 		16488E1D2BAE2D67003E1D7F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16488E1C2BAE2D67003E1D7F /* Preview Assets.xcassets */; };
 		16488E292BAE2DA8003E1D7F /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16488E262BAE2DA8003E1D7F /* ImageViewModel.swift */; };
-		16488E2A2BAE2DA8003E1D7F /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16488E272BAE2DA8003E1D7F /* ImagesView.swift */; };
+		16488E2A2BAE2DA8003E1D7F /* PhotosList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16488E272BAE2DA8003E1D7F /* PhotosList.swift */; };
 		16488E2B2BAE2DA8003E1D7F /* FilterSelectionControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16488E282BAE2DA8003E1D7F /* FilterSelectionControls.swift */; };
 		16488E2E2BAE2DAF003E1D7F /* CustomFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16488E2C2BAE2DAF003E1D7F /* CustomFilters.swift */; };
 		16488E2F2BAE2DAF003E1D7F /* CustomFilters.metal in Sources */ = {isa = PBXBuildFile; fileRef = 16488E2D2BAE2DAF003E1D7F /* CustomFilters.metal */; };
@@ -28,7 +28,7 @@
 		16488E192BAE2D67003E1D7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16488E1C2BAE2D67003E1D7F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		16488E262BAE2DA8003E1D7F /* ImageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
-		16488E272BAE2DA8003E1D7F /* ImagesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
+		16488E272BAE2DA8003E1D7F /* PhotosList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosList.swift; sourceTree = "<group>"; };
 		16488E282BAE2DA8003E1D7F /* FilterSelectionControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSelectionControls.swift; sourceTree = "<group>"; };
 		16488E2C2BAE2DAF003E1D7F /* CustomFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFilters.swift; sourceTree = "<group>"; };
 		16488E2D2BAE2DAF003E1D7F /* CustomFilters.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = CustomFilters.metal; sourceTree = "<group>"; };
@@ -110,7 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				16488E282BAE2DA8003E1D7F /* FilterSelectionControls.swift */,
-				16488E272BAE2DA8003E1D7F /* ImagesView.swift */,
+				16488E272BAE2DA8003E1D7F /* PhotosList.swift */,
 				16488E262BAE2DA8003E1D7F /* ImageViewModel.swift */,
 			);
 			path = UI;
@@ -193,7 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16488E2A2BAE2DA8003E1D7F /* ImagesView.swift in Sources */,
+				16488E2A2BAE2DA8003E1D7F /* PhotosList.swift in Sources */,
 				16488E292BAE2DA8003E1D7F /* ImageViewModel.swift in Sources */,
 				16488E312BAE2DB8003E1D7F /* ImageFilterCategory.swift in Sources */,
 				16488E2B2BAE2DA8003E1D7F /* FilterSelectionControls.swift in Sources */,
@@ -351,9 +351,13 @@
 				MTLLINKER_FLAGS = "-framework CoreImage";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jacob.CoreImageToy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -381,9 +385,13 @@
 				MTLLINKER_FLAGS = "-framework CoreImage";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jacob.CoreImageToy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

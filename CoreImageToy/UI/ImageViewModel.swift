@@ -1,30 +1,29 @@
 //
-//  ImagesViewModel.swift
+//  PhotosViewModel.swift
 //  CoreImageToy
 //
 //  Created by Jacob Bartlett on 21/03/2024.
 //
 
 import CoreImage
+import PhotosUI
 import SwiftUI
 
 @Observable
-final class ImagesViewModel {
+final class PhotosViewModel {
 
     private let context = CIContext()
     
-    var catImages: [UIImage?] = []
+    var photoSelection: [UIImage?] = []
+    var filteredPhotos: [UIImage?] = []
     var filterCategories: [ImageFilterCategory]
     
     init() {
-        catImages = Constants.catNames
-            .compactMap { UIImage(named: $0) }
-        filterCategories = CollectionOfOne(Constants.customFilters) + Constants.filterCategoryNames.toFilterCategories()
+        filterCategories = Constants.filterCategoryNames.toFilterCategories() + CollectionOfOne(Constants.customFilters)
     }
     
     func updateFilters() {
-        catImages = Constants.catNames
-            .compactMap { UIImage(named: $0) }
+        filteredPhotos = photoSelection
             .map { apply(filters: filterCategories.selectedFilters, to: $0) }
     }
     
@@ -44,29 +43,20 @@ final class ImagesViewModel {
     }
     
     func removeAllFilters() {
-        filterCategories = CollectionOfOne(Constants.customFilters) + Constants.filterCategoryNames.toFilterCategories()
+        filterCategories = Constants.filterCategoryNames.toFilterCategories() + CollectionOfOne(Constants.customFilters)
         updateFilters()
     }
     
-    private func apply(filter: CIFilter, to image: UIImage) -> UIImage {
-        let originalImage = CIImage(image: image)
-        filter.setValue(originalImage, forKey: kCIInputImageKey)
-        guard let outputImage = filter.outputImage,
-              let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
-        return UIImage(cgImage: cgImage)
+    func removeAllPhotos() {
+        withAnimation {
+            photoSelection = []
+            filteredPhotos = []
+        }
+        removeAllFilters()
     }
     
-    private func apply(filter1: CIFilter, filter2: CIFilter, to image: UIImage) -> UIImage {
-        let originalImage = CIImage(image: image)
-        filter1.setValue(originalImage, forKey: kCIInputImageKey)
-        guard let output1 = filter1.outputImage else { return image }
-        filter2.setValue(output1, forKey: kCIInputImageKey)
-        guard let output2 = filter2.outputImage,
-              let cgImage = context.createCGImage(output2, from: output2.extent) else { return image }
-        return UIImage(cgImage: cgImage)
-    }
-    
-    private func apply(filters: [CIFilter], to image: UIImage) -> UIImage {
+    private func apply(filters: [CIFilter], to image: UIImage?) -> UIImage? {
+        guard let image else { return nil }
         guard let ciImage = CIImage(image: image) else { return image }
         let filteredImage = filters.reduce(ciImage) { image, filter in
             filter.setValue(image, forKey: kCIInputImageKey)

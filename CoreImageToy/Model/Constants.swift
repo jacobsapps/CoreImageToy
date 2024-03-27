@@ -9,17 +9,16 @@ import CoreImage
 import Foundation
 
 enum Constants {
-    static let catNames: [String] = ["catKingdom", "rosie", "cody", "luna"]
     
-    static let filterCategoryNames: [String] = [kCICategoryStylize,
-                                                kCICategoryColorEffect,
+    static let filterCategoryNames: [String] = [kCICategoryColorEffect,
+                                                kCICategoryStylize,
                                                 kCICategoryBlur,
                                                 kCICategoryDistortionEffect,
                                                 kCICategoryColorAdjustment,
                                                 kCICategoryGeometryAdjustment]
     
     static let customFilters = ImageFilterCategory(
-        name: "Custom filters",
+        name: "My custom filters",
         filterSelection: [
             ImageFilterSelection(filter: GrainyFilter()),
             ImageFilterSelection(filter: DiagonalFilter()),
@@ -33,7 +32,7 @@ enum Constants {
             ImageFilterSelection(filter: ShiftFilter()),
             ImageFilterSelection(filter: ThreeDGlassesFilter()),
             ImageFilterSelection(filter: PixellateFacesFilter()),
-            ImageFilterSelection(filter: VoidStuffFilter())
-        ].reversed()
+            ImageFilterSelection(filter: OmnidimensionalFaceFilter())
+        ]
     )
 }

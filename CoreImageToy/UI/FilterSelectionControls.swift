@@ -27,7 +27,7 @@ struct FilterSelectionControls: View {
         }
     }
     
-    @Binding var viewModel: ImagesViewModel
+    @Binding var viewModel: PhotosViewModel
     @State private var selectedDetent: PresentationDetent = Detent.small.detent
     private let availableDetents: Set<PresentationDetent> = Set(Detent.allCases.map { $0.detent })
     

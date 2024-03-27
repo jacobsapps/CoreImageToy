@@ -41,6 +41,7 @@ final class ShiftFilter: CIFilter { }
 @SamplerKernel
 final class ThreeDGlassesFilter: CIFilter { }
 
+// Proof of concept
 final class PixellateFacesFilter: CIFilter {
     
     private let context = CIContext()
@@ -84,7 +85,8 @@ final class PixellateFacesFilter: CIFilter {
     }
 }
 
-final class VoidStuffFilter: CIFilter {
+// Proof of concept
+final class OmnidimensionalFaceFilter: CIFilter {
     
     private let context = CIContext()
     
