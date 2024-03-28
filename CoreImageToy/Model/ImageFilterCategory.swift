@@ -12,6 +12,17 @@ struct ImageFilterCategory: Identifiable {
     var id: String { name }
     let name: String
     var filterSelection: [ImageFilterSelection]
+    
+    func filters(matching searchText: String) -> [ImageFilterSelection] {
+        if searchText.isEmpty {
+            return filterSelection
+            
+        } else {
+            return filterSelection.filter {
+                $0.filter.name.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
 }
 
 extension [ImageFilterCategory] {

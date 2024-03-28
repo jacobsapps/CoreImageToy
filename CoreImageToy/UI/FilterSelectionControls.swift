@@ -18,17 +18,18 @@ struct FilterSelectionControls: View {
         var detent: PresentationDetent {
             switch self {
             case .small:
-                return .fraction(0.2)
+                return .fraction(0.25)
             case .medium:
-                return .fraction(0.55)
+                return .fraction(0.6)
             case .large:
-                return .fraction(0.85)
+                return .fraction(0.9)
             }
         }
     }
     
     @Binding var viewModel: PhotosViewModel
     @State private var selectedDetent: PresentationDetent = Detent.small.detent
+    @State private var searchText: String = ""
     private let availableDetents: Set<PresentationDetent> = Set(Detent.allCases.map { $0.detent })
     
     var body: some View {
@@ -36,7 +37,7 @@ struct FilterSelectionControls: View {
             List {
                 ForEach(viewModel.filterCategories) { category in
                     Section(category.name) {
-                        ForEach(category.filterSelection) { selection in
+                        ForEach(category.filters(matching: searchText)) { selection in
                             Button(action: {
                                 viewModel.select(category: category, selection: selection)
                                 
@@ -50,7 +51,7 @@ struct FilterSelectionControls: View {
                                     
                                     if viewModel.isSelected(category: category, selection: selection) {
                                         if selection.sortOrder > 0 {
-                                            Text("(#\(selection.sortOrder))")
+                                            Text("(\(selection.sortOrder))")
                                                 .font(.caption)
                                                 .fontWeight(.medium)
                                         }
@@ -64,17 +65,23 @@ struct FilterSelectionControls: View {
                     }
                 }
             }
+            .searchable(text: $searchText,
+                        placement: (selectedDetent == Detent.large.detent) ? .navigationBarDrawer(displayMode: .always) : .automatic,
+                        prompt: "Search Filters")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        viewModel.removeAllFilters()
+                        withAnimation {
+                            searchText = ""
+                            viewModel.removeAllFilters()
+                        }
                         
                     }, label: {
                         Image(systemName: "trash")
                     })
                 }
             }
-            .navigationTitle("CoreImage Filters")
+            .navigationTitle("Core Image Filters")
             .navigationBarTitleDisplayMode(.inline)
         }
         .presentationDetents(availableDetents, selection: $selectedDetent)
