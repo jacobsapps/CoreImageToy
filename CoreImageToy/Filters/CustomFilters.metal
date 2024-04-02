@@ -14,10 +14,10 @@ float4 grainyFilter(
     coreimage::sample_t s,
     coreimage::destination dest
 ) {
-    float value = fract(sin(dot(dest.coord(), float2(12.9898, 78.233))) * 43758.5453);
-    float4 noise = float4(value, value, value, 1) * 0.1;
-    float4 dampingFactor = float4(0, 0, 0, 1) * -0.1;
-    return s + noise + dampingFactor;
+    float value = fract(sin(dot(dest.coord() / 1000, float2(12.9898, 78.233))) * 43758.5453);
+    float3 noise = float3(value, value, value) * 0.1;
+    float3 dampingFactor = float3(0, 0, 0) * -0.1;
+    return float4(s.rgb + noise + dampingFactor, s.a);
 }
 
 [[ stitchable ]]
@@ -37,16 +37,14 @@ float4 diagonalFilter(
 
 [[ stitchable ]]
 float4 warmInversionFilter(
-    coreimage::sample_t s,
-    coreimage::destination dest
+    coreimage::sample_t s
 ) {
     return float4(1 - pow(s.r, 0.35), 1 - pow(s.g, 0.35), 1 - pow(s.b, 0.35), 1.0);
 }
 
 [[ stitchable ]]
 float4 normalizeFilter(
-    coreimage::sample_t s,
-    coreimage::destination dest
+    coreimage::sample_t s
 ) {
     return float4(pow(s.r, 2), pow(s.g, 2), pow(s.b, 2), 1.0);
 }
@@ -66,24 +64,21 @@ float4 waveFilter(
 
 [[ stitchable ]]
 float4 gallifreyFilter(
-    coreimage::sample_t s,
-    coreimage::destination dest
+    coreimage::sample_t s
 ) {
     return float4(s.g, s.b, s.r, s.a);
 }
 
 [[ stitchable ]]
 float4 alienFilter(
-    coreimage::sample_t s,
-    coreimage::destination dest
+    coreimage::sample_t s
 ) {
     return float4(s.b, s.r, s.g, s.a);
 }
 
 [[ stitchable ]]
 float4 grayscaleFilter(
-    coreimage::sample_t s,
-    coreimage::destination dest
+    coreimage::sample_t s
 ) {
     float3 grayscaleWeights = float3(0.2125, 0.7154, 0.0721);
     float avgLuminescence = dot(s.rgb, grayscaleWeights);
@@ -92,8 +87,7 @@ float4 grayscaleFilter(
 
 [[ stitchable ]]
 float4 spectralFilter(
-    coreimage::sample_t s,
-    coreimage::destination dest
+    coreimage::sample_t s
 ) {
     float3 grayscaleWeights = float3(0.2125, 0.7154, 0.0721);
     float avgLuminescence = dot(s.rgb, grayscaleWeights);
@@ -122,4 +116,13 @@ float4 threeDGlassesFilter(
     float2 blueCoord = src.coord() + float2(0.02, 0.02);
     color.b = sample(src, blueCoord).b;
     return color * color.a;
+}
+
+[[ stitchable ]]
+float2 thickGlassSquares(
+    float intensity,
+    coreimage::destination dest
+) {
+    return float2(dest.coord().x + (intensity * (sin(dest.coord().x / 40))),
+                  dest.coord().y + (intensity * (sin(dest.coord().y / 40))));
 }

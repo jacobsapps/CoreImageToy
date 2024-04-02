@@ -127,3 +127,42 @@ final class OmnidimensionalFaceFilter: CIFilter {
         return blendFilter.outputImage
     }
 }
+
+final class ThickGlassSquaresFilter: CIFilter {
+    
+    private let intensity: Float
+    
+    init(intensity: Float) {
+        self.intensity = intensity
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc dynamic public var inputImage: CIImage?
+
+    override public var outputImage: CIImage? {
+        guard let input = inputImage else {
+            return nil
+        }
+        return Self.kernel.apply(extent: input.extent,
+                                 roiCallback: {
+                $1
+            },
+                                 image: input,
+                                 arguments: [intensity])
+    }
+
+    static private var kernel: CIWarpKernel = { () -> CIWarpKernel in
+        getDistortionKernel(function: "thickGlassSquares")
+    }()
+    
+    
+    static private func getDistortionKernel(function: String) -> CIWarpKernel {
+        let url = Bundle.main.url(forResource: "default", withExtension: "metallib")!
+        let data = try! Data(contentsOf: url)
+        return try! CIWarpKernel(functionName: function, fromMetalLibraryData: data)
+    }
+}

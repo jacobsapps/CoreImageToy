@@ -32,7 +32,8 @@ enum Constants {
             ImageFilterSelection(filter: ShiftFilter()),
             ImageFilterSelection(filter: ThreeDGlassesFilter()),
             ImageFilterSelection(filter: PixellateFacesFilter()),
-            ImageFilterSelection(filter: OmnidimensionalFaceFilter())
+            ImageFilterSelection(filter: OmnidimensionalFaceFilter()),
+            ImageFilterSelection(filter: ThickGlassSquaresFilter(intensity: 50))
         ]
     )
 }
