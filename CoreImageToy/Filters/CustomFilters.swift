@@ -166,3 +166,40 @@ final class ThickGlassSquaresFilter: CIFilter {
         return try! CIWarpKernel(functionName: function, fromMetalLibraryData: data)
     }
 }
+
+final class LensFilter: CIFilter {
+    
+    private let centerX: Float = 0.3
+    private let centerY: Float = 0.6
+    private let radius: Float = 0.2
+    private let intensity: Float = 0.6
+    
+    @objc dynamic public var inputImage: CIImage?
+
+    override public var outputImage: CIImage? {
+        guard let input = inputImage else {
+            return nil
+        }
+        return Self.kernel.apply(extent: input.extent,
+                                 roiCallback: {
+                $1
+            },
+                                 image: input,
+                                 arguments: [input.extent.width,
+                                             input.extent.height,
+                                             centerX,
+                                             centerY,
+                                             radius,
+                                             intensity])
+    }
+
+    static private var kernel: CIWarpKernel = { () -> CIWarpKernel in
+        getDistortionKernel(function: "lensFilter")
+    }()
+    
+    static private func getDistortionKernel(function: String) -> CIWarpKernel {
+        let url = Bundle.main.url(forResource: "default", withExtension: "metallib")!
+        let data = try! Data(contentsOf: url)
+        return try! CIWarpKernel(functionName: function, fromMetalLibraryData: data)
+    }
+}

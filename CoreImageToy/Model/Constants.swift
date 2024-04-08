@@ -33,7 +33,8 @@ enum Constants {
             ImageFilterSelection(filter: ThreeDGlassesFilter()),
             ImageFilterSelection(filter: PixellateFacesFilter()),
             ImageFilterSelection(filter: OmnidimensionalFaceFilter()),
-            ImageFilterSelection(filter: ThickGlassSquaresFilter(intensity: 50))
+            ImageFilterSelection(filter: ThickGlassSquaresFilter(intensity: 50)),
+            ImageFilterSelection(filter: LensFilter())
         ]
     )
 }

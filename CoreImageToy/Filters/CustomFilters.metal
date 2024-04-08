@@ -126,3 +126,30 @@ float2 thickGlassSquares(
     return float2(dest.coord().x + (intensity * (sin(dest.coord().x / 40))),
                   dest.coord().y + (intensity * (sin(dest.coord().y / 40))));
 }
+
+[[ stitchable ]]
+float2 lensFilter(
+    float width,
+    float height,
+    float centerX,
+    float centerY,
+    float radius,
+    float intensity,
+    coreimage::destination dest
+) {
+    float2 size = float2(width, height);
+    float2 normalizedCoord = dest.coord() / size;
+    float2 center = float2(centerX, centerY);
+    float distanceFromCenter = distance(normalizedCoord, center);
+    
+    if (distanceFromCenter < radius) {
+        float2 vectorFromCenter = normalizedCoord - center;
+        float normalizedDistance = pow(distanceFromCenter / radius, 4);
+        float distortion = sin(M_PI_2_F * normalizedDistance) * intensity;
+        float2 distortedPosition = center + (vectorFromCenter * (1 + distortion));
+        return distortedPosition * size;
+
+    } else {
+        return dest.coord();
+    }
+}
