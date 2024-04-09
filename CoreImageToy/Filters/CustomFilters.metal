@@ -145,7 +145,7 @@ float2 lensFilter(
     if (distanceFromCenter < radius) {
         float2 vectorFromCenter = normalizedCoord - center;
         float normalizedDistance = pow(distanceFromCenter / radius, 4);
-        float distortion = sin(M_PI_2_F * normalizedDistance) * intensity;
+        float distortion = tan(M_PI_2_F * normalizedDistance) * intensity;
         float2 distortedPosition = center + (vectorFromCenter * (1 + distortion));
         return distortedPosition * size;
 
