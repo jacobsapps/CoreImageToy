@@ -55,13 +55,13 @@ final class PhotosViewModel {
         removeAllFilters()
     }
     
-    func sharePhotos() {
-        let filteredPhotos = filteredPhotos.compactMap { $0 }
-        guard !filteredPhotos.isEmpty,
-              let rootVC = UIApplication.shared.rootVC() else { return }
-        let activityVC = UIActivityViewController(activityItems: [filteredPhotos], applicationActivities: nil)
-        rootVC.present(activityVC, animated: true)
-    }
+//    func sharePhotos() {
+//        let filteredPhotos = filteredPhotos.compactMap { $0 }
+//        guard !filteredPhotos.isEmpty,
+//              let rootVC = UIApplication.shared.rootVC() else { return }
+//        let activityVC = UIActivityViewController(activityItems: [filteredPhotos], applicationActivities: nil)
+//        rootVC.present(activityVC, animated: true)
+//    }
     
     private func apply(filters: [CIFilter], to image: UIImage?) -> UIImage? {
         guard let image else { return nil }

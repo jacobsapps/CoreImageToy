@@ -21,7 +21,7 @@ struct PhotosList: View {
                     Task {
                         let images = await withTaskGroup(of: Data?.self, returning: [UIImage].self) { group in
                             for item in pickerItemSelection {
-                                group.addTask { 
+                                group.addTask {
                                     try? await item.loadTransferable(type: Data.self)
                                 }
                             }
@@ -45,12 +45,14 @@ struct PhotosList: View {
                             Image(systemName: "trash")
                         })
                         
-                        Button(action: {
-                            viewModel.sharePhotos()
-                            
-                        }, label: {
-                            Image(systemName: "square.and.arrow.up")
-                        })
+//                        Button(action: {
+//                            Task {
+//                                await viewModel.sharePhotos()
+//                            }
+//                            
+//                        }, label: {
+//                            Image(systemName: "square.and.arrow.up")
+//                        })
                     }
                 }
                 .navigationTitle("Core Image Toy")
@@ -62,14 +64,14 @@ struct PhotosList: View {
             PhotosPicker("Select Photos", selection: $pickerItemSelection, matching: .images)
             
         } else {
-            List(viewModel.filteredPhotos, id: \.self) {
+            List(viewModel.filteredPhotos.compactMap { $0 }, id: \.self) {
                 Photo(image: $0)
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
             }
             .listStyle(PlainListStyle())
             .padding(.bottom, 200)
-            .sheet(isPresented: .constant(!$viewModel.filteredPhotos.isEmpty)) {
+            .sheet(isPresented: .constant(!viewModel.filteredPhotos.isEmpty)) {
                 FilterSelectionControls(viewModel: $viewModel)
             }
         }
@@ -78,10 +80,10 @@ struct PhotosList: View {
 
 struct Photo: View {
     
-    let image: UIImage?
+    let image: UIImage
     
     var body: some View {
-        Image(uiImage: image ?? UIImage())
+        Image(uiImage: image)
             .resizable()
             .aspectRatio(contentMode: .fill)
     }
