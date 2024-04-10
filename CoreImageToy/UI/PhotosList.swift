@@ -36,12 +36,20 @@ struct PhotosList: View {
                     }
                 }
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        
                         Button(action: {
                             viewModel.removeAllPhotos()
                             
                         }, label: {
                             Image(systemName: "trash")
+                        })
+                        
+                        Button(action: {
+                            viewModel.sharePhotos()
+                            
+                        }, label: {
+                            Image(systemName: "square.and.arrow.up")
                         })
                     }
                 }

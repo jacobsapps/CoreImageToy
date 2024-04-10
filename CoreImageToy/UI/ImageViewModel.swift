@@ -11,7 +11,7 @@ import SwiftUI
 
 @Observable
 final class PhotosViewModel {
-
+    
     private let context = CIContext()
     
     var photoSelection: [UIImage?] = []
@@ -55,6 +55,14 @@ final class PhotosViewModel {
         removeAllFilters()
     }
     
+    func sharePhotos() {
+        let filteredPhotos = filteredPhotos.compactMap { $0 }
+        guard !filteredPhotos.isEmpty,
+              let rootVC = UIApplication.shared.rootVC() else { return }
+        let activityVC = UIActivityViewController(activityItems: [filteredPhotos], applicationActivities: nil)
+        rootVC.present(activityVC, animated: true)
+    }
+    
     private func apply(filters: [CIFilter], to image: UIImage?) -> UIImage? {
         guard let image else { return nil }
         guard let ciImage = CIImage(image: image) else { return image }
@@ -64,7 +72,7 @@ final class PhotosViewModel {
             return output
         }
         guard let cgImage = context.createCGImage(filteredImage, from: filteredImage.extent) else { return image }
-        return UIImage(cgImage: cgImage)
+        return UIImage(cgImage: cgImage, scale: image.scale, orientation: image.imageOrientation)
     }
 }
 
@@ -80,5 +88,20 @@ private extension [String] {
                 .compactMap { ImageFilterSelection(filter: $0) }
             )
         }
+    }
+}
+
+extension UIApplication {
+    
+    func rootVC() -> UIViewController? {
+        connectedScenes
+            .filter {
+                $0.activationState == .foregroundActive
+            }
+            .compactMap { $0 as? UIWindowScene }
+            .first?
+            .windows
+            .first { $0.isKeyWindow }?
+            .rootViewController
     }
 }
