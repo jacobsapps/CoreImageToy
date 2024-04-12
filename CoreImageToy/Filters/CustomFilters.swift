@@ -130,19 +130,9 @@ final class OmnidimensionalFaceFilter: CIFilter {
 
 final class ThickGlassSquaresFilter: CIFilter {
     
-    private let intensity: Float
-    
-    init(intensity: Float) {
-        self.intensity = intensity
-        super.init()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+    @objc dynamic let intensity: Float
     @objc dynamic public var inputImage: CIImage?
-
+    
     override public var outputImage: CIImage? {
         guard let input = inputImage else {
             return nil
@@ -153,6 +143,15 @@ final class ThickGlassSquaresFilter: CIFilter {
             },
                                  image: input,
                                  arguments: [intensity])
+    }
+    
+    init(intensity: Float) {
+        self.intensity = intensity
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     static private var kernel: CIWarpKernel = { () -> CIWarpKernel in
@@ -169,14 +168,13 @@ final class ThickGlassSquaresFilter: CIFilter {
 
 final class LensFilter: CIFilter {
     
-    private let centerX: Float = 0.3
-    private let centerY: Float = 0.6
-    private let radius: Float = 0.2
-    private let intensity: Float = 0.6
-    
-    @objc dynamic public var inputImage: CIImage?
+    @objc dynamic var inputImage: CIImage?
+    @objc dynamic var centerX: Float = 0.3
+    @objc dynamic var centerY: Float = 0.6
+    @objc dynamic var radius: Float = 0.2
+    @objc dynamic var intensity: Float = 0.6
 
-    override public var outputImage: CIImage? {
+    override var outputImage: CIImage? {
         guard let input = inputImage else {
             return nil
         }

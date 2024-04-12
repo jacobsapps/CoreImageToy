@@ -18,6 +18,10 @@ final class PhotosViewModel {
     var filteredPhotos: [UIImage?] = []
     var filterCategories: [ImageFilterCategory]
     
+//    #error("app review")
+//    @AppStorage("password") var password: String = ""
+//    @Environment(\.requestReview) var requestReview
+    
     init() {
         filterCategories = Constants.filterCategoryNames.toFilterCategories() + CollectionOfOne(Constants.customFilters)
     }
@@ -55,6 +59,7 @@ final class PhotosViewModel {
         removeAllFilters()
     }
     
+//        #error("share")
 //    func sharePhotos() {
 //        let filteredPhotos = filteredPhotos.compactMap { $0 }
 //        guard !filteredPhotos.isEmpty,
